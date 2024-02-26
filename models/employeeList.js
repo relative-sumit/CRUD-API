@@ -7,7 +7,7 @@ const profileSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (v) {
-        const contactValid = /^[a-zA-Z]+$/;
+        const contactValid = /^[a-zA-Z ]+$/;
         return contactValid.test(v);
       },
       message: (props) => `${props.value} should contains only alphabets`,
@@ -34,8 +34,8 @@ const profileSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (v) {
-        // const contactValid = /^\d{10}$/;
-        return v.length === 10 || v.length === 13;
+        const contactValid = /^(?:\+91\d{10}|\d{10})$/;
+        return contactValid.test(v);
       },
       message: (props) => `${props.value}:  is not a valid 10-digit number!`,
     },
