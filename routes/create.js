@@ -33,8 +33,14 @@ async function addEmployee(req, res) {
       Employee: savedPersonalDetailsData,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "An error occurred" });
+    if(error.name == 'ValidationError'){
+      res.status(400).send({ message: error.message });
+    }
+    else{
+      console.error(error);
+      res.status(500).json({ message: "An error occurred" });
+    }
+
   }
 }
 

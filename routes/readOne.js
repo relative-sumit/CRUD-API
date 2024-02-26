@@ -2,7 +2,6 @@ const Personal = require("../models/personal.js");
 
 function readOneEmployee(req, res) {
   const { empId } = req.params;
-
   Personal.find({ "profile.employeeId": empId })
     .exec()
     .then((data) => {
