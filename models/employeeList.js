@@ -7,7 +7,7 @@ const profileSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (v) {
-        const contactValid = /^[a-zA-Z ]+$/;
+        const contactValid = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
         return contactValid.test(v);
       },
       message: (props) => `${props.value} should contains only alphabets`,
