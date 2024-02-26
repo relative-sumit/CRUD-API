@@ -1,0 +1,17 @@
+{
+  "profile": {
+    "name": "Suraj",
+    "employeeId": "IN1199",
+    "companyEmail": "suraj123@example.com",
+    "location": "Pune",
+    "primaryContactNo": "123-456-7890"
+  },
+  "personal": {
+    "dob": "1990-01-01"
+  },
+  "employeeJob": {
+    "department": "Technology",
+    "designation": "Software Engineer",
+    "managerEmployeeNo": "IN1234"
+  }
+}

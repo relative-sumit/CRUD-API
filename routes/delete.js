@@ -1,20 +1,24 @@
-const Employeejob = require('../models/employeeJob');
+const Personal = require("../models/personal.js");
 
-function deleteEmpJob(req, res) {
-    const { id } = req.params;
+function deleteEmployee(req, res) {
+  const { empId } = req.params;
 
-    Employeejob.findByIdAndDelete(id)
-        .then((deletedEmpjob) => {
-            if (!deletedEmpjob) {
-                return res.status(404).json({ error: "Employee job not found" });
-            }
-            console.log(deletedEmpjob);
-            res.status(200).json({ message: "Employee job deleted successfully", Emp: deletedEmpjob });
-        })
-        .catch((error) => {
-            console.error("Error deleting data ", error);
-            res.status(500).json({ error: "Failed to delete employee job" });
+  Personal.findOneAndDelete({ "profile.employeeId": empId })
+    .then((deletedEmp) => {
+      if (!deletedEmp) {
+        return res.status(404).json({ error: "Employee not found" });
+      }
+      res
+        .status(200)
+        .json({
+          message: "Employee deleted successfully",
+          Emp: deletedEmp,
         });
+    })
+    .catch((error) => {
+      console.error("Error deleting data ", error);
+      res.status(500).json({ error: "Failed to delete employee" });
+    });
 }
 
-module.exports = deleteEmpJob
+module.exports = deleteEmployee;

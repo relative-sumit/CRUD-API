@@ -1,15 +1,55 @@
-const Employeejob = require('../models/employeeJob.js');
+const Personal = require("../models/personal.js");
+const Employeejob = require("../models/personal.js");
 
-function addEmpJob(req, res){
-    const newEmpjob = new Employeejob(req.body);
-    newEmpjob.save()
-    .then((data) =>{
-        console.log(data);
-        res.status(201).json({ message: "Employee job added successfully", Emp: data })
-    }).catch(error =>{
-        console.error("Error creating data ", error);
-        res.status(500).json({ error: "Failed to add employee job" });
-    })
+async function addEmployee(req, res) {
+  try {
+    const { profile, personal, employeeJob } = req.body;
+    const { department, designation, managerEmployeeNo } = employeeJob;
+    const { name, employeeId, companyEmail, location, primaryContactNo } =
+      profile;
+    const { dob } = personal;
+
+    // const empJobData = new Employeejob({
+    //   department: department,
+    //   designation: designation,
+    //   managerEmployeeNo: managerEmployeeNo,
+    // });
+
+    // const savedEmpJobData = await empJobData.save();
+
+    const personalDetailsData = new Personal({
+      profile: {
+        name: name,
+        employeeId: employeeId,
+        companyEmail: companyEmail,
+        location: location,
+        primaryContactNo: primaryContactNo,
+      },
+      personal: {
+        dob: dob,
+      },
+      employeeJob: {
+        department: department,
+        designation: designation,
+        managerEmployeeNo: managerEmployeeNo,
+      },
+    });
+
+    const savedPersonalDetailsData = await personalDetailsData.save();
+
+    res.status(201).json({
+      message: "Data created successfully",
+      Employee: savedPersonalDetailsData,
+    });
+  } catch (error) {
+    if(error.name == 'ValidationError'){
+      res.status(400).send({ message: error.message });
+    }
+    else{
+      console.error(error);
+      res.status(500).json({ message: "An error occurred" });
+    }
+  }
 }
 
-module.exports = addEmpJob
+module.exports = addEmployee;

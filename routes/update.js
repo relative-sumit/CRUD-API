@@ -1,20 +1,25 @@
-const Employeejob = require('../models/employeeJob');
+const Personal = require("../models/personal.js");
 
-function updateEmpJob(req, res){
-    const { id } = req.params;
-    const updateDetails = req.body;
+function updateEmpJob(req, res) {
+  const { empId } = req.params;
+  const updateDetails = req.body;
 
-    Employeejob.findByIdAndUpdate(id, updateDetails, {new : true})
-    .then((updatedData) =>{
-        if(!updatedData){
-            return res.status(404).json({ error: "Employee job not found" })
-        }
-        console.log(updatedData);
-        res.status(200).json({ message: "Employee job updated successfully", Emp: updatedData });
-    }).catch(error => {
-        console.error("Error updating data ", error);
-        res.status(500).json({ error: "Failed to update employee job" });
+  Personal.findOneAndUpdate({ "profile.employeeId": empId }, updateDetails, {
+    new: true,
+  })
+    .then((updatedData) => {
+      if (!updatedData) {
+        return res.status(404).json({ error: "Employee not found" });
+      }
+      res.status(200).json({
+        message: "Employee updated successfully",
+        Emp: updatedData,
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating data ", error);
+      res.status(500).json({ error: "Failed to update employee" });
     });
 }
 
-module.exports = updateEmpJob
+module.exports = updateEmpJob;
