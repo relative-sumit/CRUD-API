@@ -13,10 +13,6 @@ const profileSchema = new mongoose.Schema({
             message: props => `${props.value} should contains only alphabets`
         }
     },
-    employeeId: {
-        type: String,
-        default: 'IN1000'
-    },
     companyEmail: {
         type: String,
         required: true,
@@ -76,9 +72,28 @@ const empJobSchema = new mongoose.Schema({
 profileSchema.path
 
 const personalDetailsSchema = new mongoose.Schema({
+    employeeId: {
+        type: String,
+        default: 'IN1000'
+    },
     profile: [profileSchema],
     personal: [personalSchema],
     employeeJob: [empJobSchema]
+});
+
+personalDetailsSchema.pre("save", function (next) {
+  Counter.findOneAndUpdate(
+    { _id: "IN1000" },
+    { $inc: { employeeId: 1 } },
+    { new: true, upsert: true }
+  )
+    .then((counter) => {
+      this.employeeId = counter.employeeId;
+      next();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 module.exports = mongoose.model('Personal', personalDetailsSchema)

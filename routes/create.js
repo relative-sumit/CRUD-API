@@ -5,22 +5,13 @@ async function addEmployee(req, res) {
   try {
     const { profile, personal, employeeJob } = req.body;
     const { department, designation, managerEmployeeNo } = employeeJob;
-    const { name, employeeId, companyEmail, location, primaryContactNo } =
+    const { name, companyEmail, location, primaryContactNo } =
       profile;
     const { dob } = personal;
-
-    // const empJobData = new Employeejob({
-    //   department: department,
-    //   designation: designation,
-    //   managerEmployeeNo: managerEmployeeNo,
-    // });
-
-    // const savedEmpJobData = await empJobData.save();
 
     const personalDetailsData = new Personal({
       profile: {
         name: name,
-        employeeId: employeeId,
         companyEmail: companyEmail,
         location: location,
         primaryContactNo: primaryContactNo,
@@ -49,6 +40,7 @@ async function addEmployee(req, res) {
       console.error(error);
       res.status(500).json({ message: "An error occurred" });
     }
+
   }
 }
 
