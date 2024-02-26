@@ -1,5 +1,4 @@
-const Personal = require("../models/personal.js");
-const Employeejob = require("../models/personal.js");
+const Employee = require("../models/employeeList.js");
 
 async function addEmployee(req, res) {
   try {
@@ -9,7 +8,7 @@ async function addEmployee(req, res) {
       profile;
     const { dob } = personal;
 
-    const personalDetailsData = new Personal({
+    const personalDetailsData = new Employee({
       profile: {
         name: name,
         companyEmail: companyEmail,

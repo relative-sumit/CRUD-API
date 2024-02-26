@@ -1,10 +1,10 @@
-const Personal = require("../models/personal.js");
+const Employee = require("../models/employeeList.js");
 
 function updateEmpJob(req, res) {
   const { empId } = req.params;
   const updateDetails = req.body;
 
-  Personal.findOneAndUpdate({ "profile.employeeId": empId }, updateDetails, {
+  Employee.findOneAndUpdate({ "employeeId": empId }, updateDetails, {
     new: true,
   })
     .then((updatedData) => {
