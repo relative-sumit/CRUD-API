@@ -6,7 +6,7 @@ function readOneEmployee(req, res) {
   Personal.find({ "profile.employeeId": empId })
     .exec()
     .then((data) => {
-      if (!data) {
+      if (!data || data.length === 0) {
         return res.status(404).json({ message: "Employee not found" });
       }
       res.status(200).json(data);

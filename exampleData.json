@@ -1,7 +1,7 @@
 {
   "profile": {
     "name": "Suraj",
-    "employeeId": "IN1199",
+    "employeeId": 1199,
     "companyEmail": "suraj123@example.com",
     "location": "Pune",
     "primaryContactNo": "123-456-7890"

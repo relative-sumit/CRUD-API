@@ -8,12 +8,10 @@ function deleteEmployee(req, res) {
       if (!deletedEmp) {
         return res.status(404).json({ error: "Employee not found" });
       }
-      res
-        .status(200)
-        .json({
-          message: "Employee deleted successfully",
-          Emp: deletedEmp,
-        });
+      res.status(200).json({
+        message: "Employee deleted successfully",
+        Emp: deletedEmp,
+      });
     })
     .catch((error) => {
       console.error("Error deleting data ", error);
