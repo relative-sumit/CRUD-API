@@ -1,7 +1,7 @@
-const Personal = require("../models/personal.js");
+const Employee = require("../models/employeeList.js");
 
 function readEmployee(req, res) {
-  Personal.find({})
+  Employee.find({})
     .exec()
     .then((data) => {
       res.status(200).json(data);

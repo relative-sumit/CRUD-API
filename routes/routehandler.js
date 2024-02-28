@@ -13,9 +13,9 @@ router.get('', (req, res)=>{
 });
 
 router.get('/get', readEmployee);
-router.get('/getOne/:empId', readOneEmployee);
+router.get('/getOne', readOneEmployee);
 router.post('/add', addEmployee);
-router.put('/update/:empId', updateEmpjob);
-router.delete('/delete/:empId', deleteEmployee);
+router.put('/update', updateEmpjob);
+router.delete('/delete', deleteEmployee);
 
 module.exports = router

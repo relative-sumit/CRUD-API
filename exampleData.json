@@ -1,9 +1,11 @@
 {
   "profile": {
-    "name": "Suraj",
-    "companyEmail": "suraj123@example.com",
-    "location": "Pune",
-    "primaryContactNo": "123-456-7890"
+    "firstName": "Mahindra",
+    "middleName": "singh",
+    "lastName": "Dhoni",
+    "companyEmail": "mahi@msd.com",
+    "location": "Jarkhand",
+    "primaryContactNo": "1234567890"
   },
   "personal": {
     "dob": "1990-01-01"
@@ -11,6 +13,14 @@
   "employeeJob": {
     "department": "Technology",
     "designation": "Software Engineer",
-    "managerEmployeeNo": "IN1234"
+    "managerEmployeeNo": 1234
+  },
+  "asset": {
+    "assetId": "IN-PA-L076",
+    "assetName": "lenovo",
+    "assetModel": "system",
+    "assetType": "windows"
   }
 }
+
+

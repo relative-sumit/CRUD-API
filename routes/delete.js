@@ -1,9 +1,9 @@
-const Personal = require("../models/personal.js");
+const Employee = require("../models/employeeList.js");
 
 function deleteEmployee(req, res) {
-  const { empId } = req.params;
+  const empId = req.headers.empid;
 
-  Personal.findOneAndDelete({ "profile.employeeId": empId })
+  Employee.findOneAndDelete({ "employeeId": empId })
     .then((deletedEmp) => {
       if (!deletedEmp) {
         return res.status(404).json({ error: "Employee not found" });

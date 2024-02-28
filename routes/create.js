@@ -1,17 +1,20 @@
-const Personal = require("../models/personal.js");
-const Employeejob = require("../models/personal.js");
+const Employee = require("../models/employeeList.js");
 
 async function addEmployee(req, res) {
   try {
-    const { profile, personal, employeeJob } = req.body;
+    const { profile, personal, employeeJob, asset} = req.body;
     const { department, designation, managerEmployeeNo } = employeeJob;
-    const { name, companyEmail, location, primaryContactNo } =
+    const { firstName, middleName, lastName, companyEmail, location, primaryContactNo } =
       profile;
     const { dob } = personal;
+    const { assetId, assetName, assetModel, assetType} = asset
 
-    const personalDetailsData = new Personal({
+    const personalDetailsData = new Employee({
       profile: {
-        name: name,
+        firstName: firstName,
+        middleName: middleName,
+        lastName: lastName,
+        fullName: `${firstName} ${middleName} ${lastName}`,
         companyEmail: companyEmail,
         location: location,
         primaryContactNo: primaryContactNo,
@@ -24,6 +27,12 @@ async function addEmployee(req, res) {
         designation: designation,
         managerEmployeeNo: managerEmployeeNo,
       },
+      asset: {
+        assetId: assetId,
+        assetName: assetName,
+        assetModel: assetModel,
+        assetType: assetType        
+      }
     });
 
     const savedPersonalDetailsData = await personalDetailsData.save();
