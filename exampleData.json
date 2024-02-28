@@ -1,6 +1,8 @@
 {
   "profile": {
-    "name": "Suraj",
+    "firstName": "Mahindra",
+    "middleName": "singh",
+    "lastName": "Dhoni",
     "companyEmail": "suraj123@example.com",
     "location": {
       "flat": "301",
@@ -18,6 +20,14 @@
   "employeeJob": {
     "department": "Technology",
     "designation": "Software Engineer",
-    "managerEmployeeNo": 1000
+    "managerEmployeeNo": 1234
+  },
+  "asset": {
+    "assetId": "IN-PA-L076",
+    "assetName": "lenovo",
+    "assetModel": "system",
+    "assetType": "windows"
   }
 }
+
+

@@ -1,7 +1,7 @@
 const Employee = require("../models/employeeList.js");
 
 function deleteEmployee(req, res) {
-  const { empId } = req.params;
+  const empId = req.headers.empid;
 
   // Employee.findOneAndDelete({ "employeeId": empId })
   //   .then((deletedEmp) => {

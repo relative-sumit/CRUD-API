@@ -36,7 +36,7 @@ const locationSchema = new mongoose.Schema({
 });
 
 const profileSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
     required: true,
     validate: {
@@ -44,8 +44,33 @@ const profileSchema = new mongoose.Schema({
         const contactValid = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
         return contactValid.test(v);
       },
-      message: (props) => `${props.value} should contains only alphabets`,
+      message: (props) => `${props.value} should contains only alphabets and no white spaces before and after`,
     },
+  },
+  middleName: {type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} should contains only alphabets and no white spaces before and after`,
+    },
+  },
+  lastName: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} should contains only alphabets and no white spaces before and after`,
+    },
+  },
+  fullName: { 
+    type: String,
+    required: true,
   },
   companyEmail: {
     type: String,
@@ -72,6 +97,7 @@ const profileSchema = new mongoose.Schema({
     },
   },
 });
+
 const personalSchema = new mongoose.Schema({
   dob: {
     type: Date,
@@ -94,6 +120,24 @@ const empJobSchema = new mongoose.Schema({
   },
 });
 
+const assetSchema = new mongoose.Schema({
+  assetId:{
+    type:String,
+    required: true
+  },
+  assetName:{
+    type:String,
+    required: true
+  },
+  assetModel: {
+    type: String,
+    required: true
+  },
+  assetType: {
+    type: String,
+    required: true
+  }
+})
 const employeeSchema = new mongoose.Schema({
   employeeId: {
     type: Number,
@@ -103,11 +147,17 @@ const employeeSchema = new mongoose.Schema({
   profile: profileSchema,
   personal: personalSchema,
   employeeJob: empJobSchema,
-  deleted: {
+  asset: assetSchema,
+   deleted: {
     type: Number,
     default: 0,
     enum: [0, 1],
   },
+  role:{
+    type: String,
+    required: true,
+    enum: ["user", "admin"]
+});
 
 employeeSchema.pre("save", function (next) {
   Counter.findOneAndUpdate(
@@ -116,7 +166,7 @@ employeeSchema.pre("save", function (next) {
     { new: true, upsert: true }
   )
     .then((counter) => {
-      this.employeeId = counter.employeeId;
+      this.employeeId = counter.employeeId
       next();
     })
     .catch((error) => {

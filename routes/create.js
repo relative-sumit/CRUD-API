@@ -2,12 +2,13 @@ const Employee = require("../models/employeeList.js");
 
 async function addEmployee(req, res) {
   try {
-    const { profile, personal, employeeJob } = req.body;
+    const { profile, personal, employeeJob, asset} = req.body;
     const { department, designation, managerEmployeeNo } = employeeJob;
-    let managerEmployeeNoId;
-    const { name, companyEmail, location, primaryContactNo } = profile;
+    const { firstName, middleName, lastName, companyEmail, location, primaryContactNo } =
+      profile;
     const { flat, area, landmark, pincode, city, state } = location;
     const { dob } = personal;
+    const { assetId, assetName, assetModel, assetType} = asset
 
     await Employee.find({ employeeId: managerEmployeeNo })
       .exec()
@@ -24,10 +25,13 @@ async function addEmployee(req, res) {
           .status(500)
           .json({ message: "An error occurred, manger not found" });
       });
-
+    
     const personalDetailsData = new Employee({
       profile: {
-        name: name,
+        firstName: firstName,
+        middleName: middleName,
+        lastName: lastName,
+        fullName: `${firstName} ${middleName} ${lastName}`,
         companyEmail: companyEmail,
         location: {
           flat: flat,
@@ -47,6 +51,12 @@ async function addEmployee(req, res) {
         designation: designation,
         managerEmployeeNo: managerEmployeeNoId,
       },
+      asset: {
+        assetId: assetId,
+        assetName: assetName,
+        assetModel: assetModel,
+        assetType: assetType        
+      }
     });
 
     const savedPersonalDetailsData = await personalDetailsData.save();

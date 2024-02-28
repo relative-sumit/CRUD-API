@@ -8,6 +8,9 @@ const empCrud = require('./routes/routehandler.js');
 const port = process.env.PORT;
 
 app.use(express.json());
+
+// app.use(express.urlencoded({extended: false}));
+
 app.get('', (req, res)=>{
     res.send("Welcome to main page");
 });
