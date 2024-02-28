@@ -2,8 +2,15 @@
   "profile": {
     "name": "Suraj",
     "companyEmail": "suraj123@example.com",
-    "location": "Pune",
-    "primaryContactNo": "123-456-7890"
+    "location": {
+      "flat": "301",
+      "area": "Gandhi colony",
+      "landmark": "Near SBI bank",
+      "pincode": 123456,
+      "city": "Nagpur",
+      "state": "Maharastra"
+    },
+    "primaryContactNo": "4545778383"
   },
   "personal": {
     "dob": "1990-01-01"
@@ -11,6 +18,6 @@
   "employeeJob": {
     "department": "Technology",
     "designation": "Software Engineer",
-    "managerEmployeeNo": "IN1234"
+    "managerEmployeeNo": 1000
   }
 }

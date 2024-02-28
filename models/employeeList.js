@@ -1,6 +1,40 @@
 const mongoose = require("mongoose");
 const Counter = require("./counter.js");
 
+const locationSchema = new mongoose.Schema({
+  flat: {
+    type: String,
+    required: true,
+  },
+  area: {
+    type: String,
+    required: true,
+  },
+  landmark: {
+    type: String,
+    required: true,
+  },
+  pincode: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^\d{6}$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} is not a valid pincode`,
+    },
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+});
+
 const profileSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -25,10 +59,7 @@ const profileSchema = new mongoose.Schema({
         `${props.value} is not in valid formate eg: example@gmail.com`,
     },
   },
-  location: {
-    type: String,
-    required: true,
-  },
+  location: locationSchema,
   primaryContactNo: {
     type: String,
     required: true,
@@ -58,18 +89,10 @@ const empJobSchema = new mongoose.Schema({
     required: true,
   },
   managerEmployeeNo: {
-    type: Number,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Employee",
   },
 });
-
-//personal validations
-// profileSchema.path('name').validate((value) => {
-//     const nameRegex = /^[a-zA-Z]+$/;
-//     return nameRegex.test(value);
-// }, "Name should contains only alphabets");
-
-profileSchema.path;
 
 const employeeSchema = new mongoose.Schema({
   employeeId: {
@@ -77,10 +100,14 @@ const employeeSchema = new mongoose.Schema({
     unique: true,
     immutable: true,
   },
-  profile: [profileSchema],
-  personal: [personalSchema],
-  employeeJob: [empJobSchema],
-});
+  profile: profileSchema,
+  personal: personalSchema,
+  employeeJob: empJobSchema,
+  deleted: {
+    type: Number,
+    default: 0,
+    enum: [0, 1],
+  },
 
 employeeSchema.pre("save", function (next) {
   Counter.findOneAndUpdate(

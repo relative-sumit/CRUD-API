@@ -4,15 +4,39 @@ async function addEmployee(req, res) {
   try {
     const { profile, personal, employeeJob } = req.body;
     const { department, designation, managerEmployeeNo } = employeeJob;
-    const { name, companyEmail, location, primaryContactNo } =
-      profile;
+    let managerEmployeeNoId;
+    const { name, companyEmail, location, primaryContactNo } = profile;
+    const { flat, area, landmark, pincode, city, state } = location;
     const { dob } = personal;
+
+    await Employee.find({ employeeId: managerEmployeeNo })
+      .exec()
+      .then((data) => {
+        if (!data || data.length === 0) {
+          res.status(404).json({ message: "Manager not found" });
+          res.end();
+        }
+        managerEmployeeNoId = data[0]._id;
+      })
+      .catch((err) => {
+        console.error(err);
+        res
+          .status(500)
+          .json({ message: "An error occurred, manger not found" });
+      });
 
     const personalDetailsData = new Employee({
       profile: {
         name: name,
         companyEmail: companyEmail,
-        location: location,
+        location: {
+          flat: flat,
+          area: area,
+          landmark: landmark,
+          pincode: pincode,
+          city: city,
+          state: state,
+        },
         primaryContactNo: primaryContactNo,
       },
       personal: {
@@ -21,7 +45,7 @@ async function addEmployee(req, res) {
       employeeJob: {
         department: department,
         designation: designation,
-        managerEmployeeNo: managerEmployeeNo,
+        managerEmployeeNo: managerEmployeeNoId,
       },
     });
 
@@ -32,14 +56,12 @@ async function addEmployee(req, res) {
       Employee: savedPersonalDetailsData,
     });
   } catch (error) {
-    if(error.name == 'ValidationError'){
+    if (error.name == "ValidationError") {
       res.status(400).send({ message: error.message });
-    }
-    else{
+    } else {
       console.error(error);
       res.status(500).json({ message: "An error occurred" });
     }
-
   }
 }
 
