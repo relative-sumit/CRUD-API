@@ -78,7 +78,7 @@ async function addEmployee(req, res) {
       res.status(400).send({ message: error.message });
     } else {
       console.error(error);
-      res.status(500).json({ message: "An error occurred" });
+      res.status(500).json({ message: "An error occurred in create." });
     }
   }
 }

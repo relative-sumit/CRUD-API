@@ -20,7 +20,7 @@
   "employeeJob": {
     "department": "Technology",
     "designation": "Software Engineer",
-    "managerEmployeeNo": 1234
+    "managerEmployeeNo": 1000
   },
   "asset": {
     "assetId": "IN-PA-L076",
