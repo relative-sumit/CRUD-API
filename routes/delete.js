@@ -1,7 +1,7 @@
 const Employee = require("../models/employeeList.js");
 
 function deleteEmployee(req, res) {
-  const { empId } = req.params;
+  const empId = req.headers.empid;
 
   // Employee.findOneAndDelete({ "employeeId": empId })
   //   .then((deletedEmp) => {
@@ -19,17 +19,15 @@ function deleteEmployee(req, res) {
   //     console.error("Error deleting data ", error);
   //     res.status(500).json({ error: "Failed to delete employee" });
   //   });
-  Employee.findOneAndUpdate({ "employeeId": empId }, {"deleted": 1})
+  Employee.findOneAndUpdate({ employeeId: empId }, { present: 0 })
     .then((deletedEmp) => {
       if (!deletedEmp) {
         return res.status(404).json({ error: "Employee not found" });
       }
-      res
-        .status(200)
-        .json({
-          message: "Employee deleted successfully",
-          Emp: deletedEmp,
-        });
+      res.status(200).json({
+        message: "Employee deleted successfully",
+        Emp: deletedEmp,
+      });
     })
     .catch((error) => {
       console.error("Error deleting data ", error);

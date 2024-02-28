@@ -2,21 +2,29 @@ const Employee = require("../models/employeeList.js");
 
 async function addEmployee(req, res) {
   try {
-    const { profile, personal, employeeJob } = req.body;
+    const { profile, personal, employeeJob, asset, role } = req.body;
     const { department, designation, managerEmployeeNo } = employeeJob;
-    let managerEmployeeNoId;
-    const { name, companyEmail, location, primaryContactNo } = profile;
+    const {
+      firstName,
+      middleName,
+      lastName,
+      companyEmail,
+      location,
+      primaryContactNo,
+    } = profile;
     const { flat, area, landmark, pincode, city, state } = location;
     const { dob } = personal;
+    const { assetId, assetName, assetModel, assetType } = asset;
+    let managerEmployeeNoId;
 
-    await Employee.find({ employeeId: managerEmployeeNo })
+    await Employee.findOne({ employeeId: managerEmployeeNo })
       .exec()
       .then((data) => {
         if (!data || data.length === 0) {
           res.status(404).json({ message: "Manager not found" });
           res.end();
         }
-        managerEmployeeNoId = data[0]._id;
+        managerEmployeeNoId = data._id;
       })
       .catch((err) => {
         console.error(err);
@@ -27,7 +35,10 @@ async function addEmployee(req, res) {
 
     const personalDetailsData = new Employee({
       profile: {
-        name: name,
+        firstName: firstName,
+        middleName: middleName,
+        lastName: lastName,
+        fullName: `${firstName} ${middleName} ${lastName}`,
         companyEmail: companyEmail,
         location: {
           flat: flat,
@@ -47,6 +58,13 @@ async function addEmployee(req, res) {
         designation: designation,
         managerEmployeeNo: managerEmployeeNoId,
       },
+      asset: {
+        assetId: assetId,
+        assetName: assetName,
+        assetModel: assetModel,
+        assetType: assetType,
+      },
+      role: role,
     });
 
     const savedPersonalDetailsData = await personalDetailsData.save();
@@ -60,7 +78,7 @@ async function addEmployee(req, res) {
       res.status(400).send({ message: error.message });
     } else {
       console.error(error);
-      res.status(500).json({ message: "An error occurred" });
+      res.status(500).json({ message: "An error occurred in create." });
     }
   }
 }

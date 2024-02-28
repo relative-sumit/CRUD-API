@@ -1,11 +1,11 @@
 const Employee = require("../models/employeeList.js");
 
 function readOneEmployee(req, res) {
-  const { empId } = req.params;
-  Employee.find({ employeeId: empId })
+  const empId = req.headers.empid;
+  Employee.find({ employeeId: empId, present: 1 })
     .populate({
       path: "employeeJob.managerEmployeeNo",
-      select: "employeeId profile.name",
+      select: "employeeId profile.fullName",
     })
     .exec()
     .then((data) => {
@@ -16,7 +16,7 @@ function readOneEmployee(req, res) {
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).json({ message: "An error occurred" });
+      res.status(500).json({ message: "An error occurred in readone" });
     });
 }
 

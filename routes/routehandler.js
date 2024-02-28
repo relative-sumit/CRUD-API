@@ -1,21 +1,23 @@
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const readEmployee = require('./read.js');
-const readOneEmployee = require('./readOne.js');
-const addEmployee = require('./create.js');
-const updateEmpjob = require('./update.js');
-const deleteEmployee = require('./delete.js');
+const login = require("./login.js");
+const readEmployee = require("./read.js");
+const readOneEmployee = require("./readOne.js");
+const addEmployee = require("./create.js");
+const updateEmpjob = require("./update.js");
+const deleteEmployee = require("./delete.js");
+const cheskAuth = require("../middleware/checkAutherization.js");
 
-
-router.get('', (req, res)=>{
-    res.send("This is router handler page.")
+router.get("", (req, res) => {
+  res.send("This is router handler page.");
 });
 
-router.get('/get', readEmployee);
-router.get('/getOne/:empId', readOneEmployee);
-router.post('/add', addEmployee);
-router.put('/update/:empId', updateEmpjob);
-router.delete('/delete/:empId', deleteEmployee);
+router.get("/login", login);
 
-module.exports = router
+router.get("/get", cheskAuth, readEmployee);
+router.get("/getOne", cheskAuth, readOneEmployee);
+router.post("/add", cheskAuth, addEmployee);
+router.put("/update", cheskAuth, updateEmpjob);
+router.delete("/delete", cheskAuth, deleteEmployee);
+
+module.exports = router;
