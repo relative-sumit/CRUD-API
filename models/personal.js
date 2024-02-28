@@ -36,7 +36,7 @@ const empJobSchema = new mongoose.Schema({
     required: true,
   },
   managerEmployeeNo: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
@@ -55,7 +55,7 @@ personalDetailsSchema.pre("save", function (next) {
   Counter.findOneAndUpdate(
     { _id: "IN1000" },
     { $inc: { employeeId: 1 } },
-    { new: true, upsert: true }
+    { upsert: true, new: true }
   )
     .then((counter) => {
       this.employeeId = counter.employeeId;
