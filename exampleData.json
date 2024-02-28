@@ -3,6 +3,7 @@
     "firstName": "Mahindra",
     "middleName": "singh",
     "lastName": "Dhoni",
+    "fullName": "Mahindra singh Dhoni",
     "companyEmail": "msd123@example.com",
     "location": {
       "flat": "301",
@@ -28,7 +29,7 @@
     "assetModel": "system",
     "assetType": "windows"
   },
-  "present": 1,
   "role": "admin",
+  "present": 1,
   "employeeId": 1000
 }
