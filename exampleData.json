@@ -3,7 +3,7 @@
     "firstName": "Mahindra",
     "middleName": "singh",
     "lastName": "Dhoni",
-    "companyEmail": "suraj123@example.com",
+    "companyEmail": "msd123@example.com",
     "location": {
       "flat": "301",
       "area": "Gandhi colony",
@@ -27,7 +27,8 @@
     "assetName": "lenovo",
     "assetModel": "system",
     "assetType": "windows"
-  }
+  },
+  "present": 1,
+  "role": "admin",
+  "employeeId": 1000
 }
-
-

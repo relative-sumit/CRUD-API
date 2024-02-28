@@ -1,7 +1,7 @@
 const Employee = require("../models/employeeList.js");
 
 function readEmployee(req, res) {
-  Employee.find({ deleted: 0 })
+  Employee.find({ present: 1 })
     .populate({
       path: "employeeJob.managerEmployeeNo",
       select: "employeeId profile.name",

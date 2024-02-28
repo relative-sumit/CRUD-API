@@ -44,17 +44,20 @@ const profileSchema = new mongoose.Schema({
         const contactValid = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
         return contactValid.test(v);
       },
-      message: (props) => `${props.value} should contains only alphabets and no white spaces before and after`,
+      message: (props) =>
+        `${props.value} should contains only alphabets and no white spaces before and after`,
     },
   },
-  middleName: {type: String,
+  middleName: {
+    type: String,
     required: true,
     validate: {
       validator: function (v) {
         const contactValid = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
         return contactValid.test(v);
       },
-      message: (props) => `${props.value} should contains only alphabets and no white spaces before and after`,
+      message: (props) =>
+        `${props.value} should contains only alphabets and no white spaces before and after`,
     },
   },
   lastName: {
@@ -65,10 +68,11 @@ const profileSchema = new mongoose.Schema({
         const contactValid = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
         return contactValid.test(v);
       },
-      message: (props) => `${props.value} should contains only alphabets and no white spaces before and after`,
+      message: (props) =>
+        `${props.value} should contains only alphabets and no white spaces before and after`,
     },
   },
-  fullName: { 
+  fullName: {
     type: String,
     required: true,
   },
@@ -121,23 +125,23 @@ const empJobSchema = new mongoose.Schema({
 });
 
 const assetSchema = new mongoose.Schema({
-  assetId:{
-    type:String,
-    required: true
+  assetId: {
+    type: String,
+    required: true,
   },
-  assetName:{
-    type:String,
-    required: true
+  assetName: {
+    type: String,
+    required: true,
   },
   assetModel: {
     type: String,
-    required: true
+    required: true,
   },
   assetType: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 const employeeSchema = new mongoose.Schema({
   employeeId: {
     type: Number,
@@ -148,15 +152,16 @@ const employeeSchema = new mongoose.Schema({
   personal: personalSchema,
   employeeJob: empJobSchema,
   asset: assetSchema,
-   deleted: {
+  present: {
     type: Number,
-    default: 0,
+    default: 1,
     enum: [0, 1],
   },
-  role:{
+  role: {
     type: String,
     required: true,
-    enum: ["user", "admin"]
+    enum: ["user", "admin"],
+  },
 });
 
 employeeSchema.pre("save", function (next) {
@@ -166,7 +171,7 @@ employeeSchema.pre("save", function (next) {
     { new: true, upsert: true }
   )
     .then((counter) => {
-      this.employeeId = counter.employeeId
+      this.employeeId = counter.employeeId;
       next();
     })
     .catch((error) => {
