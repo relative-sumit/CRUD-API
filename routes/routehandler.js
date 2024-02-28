@@ -19,5 +19,4 @@ router.get("/getOne", cheskAuth, readOneEmployee);
 router.post("/add", cheskAuth, addEmployee);
 router.put("/update", cheskAuth, updateEmpjob);
 router.delete("/delete", cheskAuth, deleteEmployee);
-
 module.exports = router;
