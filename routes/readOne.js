@@ -1,9 +1,12 @@
-const Personal = require("../models/personal.js");
+const Employee = require("../models/employeeList.js");
 
 function readOneEmployee(req, res) {
   const { empId } = req.params;
-
-  Personal.find({ "profile.employeeId": empId })
+  Employee.find({ employeeId: empId })
+    .populate({
+      path: "employeeJob.managerEmployeeNo",
+      select: "employeeId profile.name",
+    })
     .exec()
     .then((data) => {
       if (!data || data.length === 0) {
