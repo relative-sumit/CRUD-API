@@ -1,6 +1,40 @@
 const mongoose = require("mongoose");
 const Counter = require("./counter.js");
 
+const locationSchema = new mongoose.Schema({
+  flat: {
+    type: String,
+    required: true,
+  },
+  area: {
+    type: String,
+    required: true,
+  },
+  landmark: {
+    type: String,
+    required: true,
+  },
+  pincode: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^\d{6}$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} is not a valid pincode`,
+    },
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+});
+
 const profileSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -13,8 +47,7 @@ const profileSchema = new mongoose.Schema({
       message: (props) => `${props.value} should contains only alphabets and no white spaces before and after`,
     },
   },
-  middleName: {
-    type: String,
+  middleName: {type: String,
     required: true,
     validate: {
       validator: function (v) {
@@ -38,7 +71,6 @@ const profileSchema = new mongoose.Schema({
   fullName: { 
     type: String,
     required: true,
-    // immutable: true
   },
   companyEmail: {
     type: String,
@@ -52,10 +84,7 @@ const profileSchema = new mongoose.Schema({
         `${props.value} is not in valid formate eg: example@gmail.com`,
     },
   },
-  location: {
-    type: String,
-    required: true,
-  },
+  location: locationSchema,
   primaryContactNo: {
     type: String,
     required: true,
@@ -68,6 +97,7 @@ const profileSchema = new mongoose.Schema({
     },
   },
 });
+
 const personalSchema = new mongoose.Schema({
   dob: {
     type: Date,
@@ -85,8 +115,8 @@ const empJobSchema = new mongoose.Schema({
     required: true,
   },
   managerEmployeeNo: {
-    type: Number,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Employee",
   },
 });
 
@@ -117,7 +147,16 @@ const employeeSchema = new mongoose.Schema({
   profile: profileSchema,
   personal: personalSchema,
   employeeJob: empJobSchema,
-  asset: assetSchema 
+  asset: assetSchema,
+   deleted: {
+    type: Number,
+    default: 0,
+    enum: [0, 1],
+  },
+  role:{
+    type: String,
+    required: true,
+    enum: ["user", "admin"]
 });
 
 employeeSchema.pre("save", function (next) {

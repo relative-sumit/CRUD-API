@@ -5,7 +5,6 @@ function updateEmpJob(req, res) {
   const updateDetails = req.body;
   updateDetails.profile.fullName = `${updateDetails.profile.firstName} ${updateDetails.profile.middleName} ${updateDetails.profile.lastName}`,
 
-
     Employee.findOneAndUpdate({ "employeeId": empId }, updateDetails, {
       new: true, runValidators: true
     })

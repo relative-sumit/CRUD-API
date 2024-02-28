@@ -3,9 +3,16 @@
     "firstName": "Mahindra",
     "middleName": "singh",
     "lastName": "Dhoni",
-    "companyEmail": "mahi@msd.com",
-    "location": "Jarkhand",
-    "primaryContactNo": "1234567890"
+    "companyEmail": "suraj123@example.com",
+    "location": {
+      "flat": "301",
+      "area": "Gandhi colony",
+      "landmark": "Near SBI bank",
+      "pincode": 123456,
+      "city": "Nagpur",
+      "state": "Maharastra"
+    },
+    "primaryContactNo": "4545778383"
   },
   "personal": {
     "dob": "1990-01-01"

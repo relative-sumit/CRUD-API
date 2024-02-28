@@ -2,7 +2,11 @@ const Employee = require("../models/employeeList.js");
 
 function readOneEmployee(req, res) {
   const empId = req.headers.empid;
-  Employee.find({ "employeeId": empId })
+  Employee.find({ employeeId: empId })
+    .populate({
+      path: "employeeJob.managerEmployeeNo",
+      select: "employeeId profile.name",
+    })
     .exec()
     .then((data) => {
       if (!data || data.length === 0) {
