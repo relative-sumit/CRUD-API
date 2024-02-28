@@ -11,7 +11,9 @@ router.get("", (req, res) => {
   res.send("This is router handler page.");
 });
 
+
 router.get("/valid-user", login);
+
 router.get("/get", readEmployee);
 router.get("/getOne", readOneEmployee);
 router.post("/add", addEmployee);
