@@ -3,10 +3,10 @@ const Employee = require("../models/employeeList.js");
 function updateEmpJob(req, res) {
   const empId = req.headers.empid;
   const updateDetails = req.body;
-  updateDetails.profile.fullName = `${updateDetails.profile.firstName} ${updateDetails.profile.middleName} ${updateDetails.profile.lastName}`,
-
-    Employee.findOneAndUpdate({ "employeeId": empId }, updateDetails, {
-      new: true, runValidators: true
+  (updateDetails.profile.fullName = `${updateDetails.profile.firstName} ${updateDetails.profile.middleName} ${updateDetails.profile.lastName}`),
+    Employee.findOneAndUpdate({ employeeId: empId }, updateDetails, {
+      new: true,
+      runValidators: true,
     })
       .then((updatedData) => {
         if (!updatedData) {
@@ -18,7 +18,7 @@ function updateEmpJob(req, res) {
         });
       })
       .catch((error) => {
-        if (error.name == 'ValidationError') {
+        if (error.name == "ValidationError") {
           res.status(400).send({ message: error.message });
         } else {
           console.error("Error updating data ", error);

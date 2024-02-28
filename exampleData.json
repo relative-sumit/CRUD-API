@@ -3,7 +3,7 @@
     "firstName": "Mahindra",
     "middleName": "singh",
     "lastName": "Dhoni",
-    "companyEmail": "suraj123@example.com",
+    "companyEmail": "msd123@example.com",
     "location": {
       "flat": "301",
       "area": "Gandhi colony",
@@ -20,14 +20,15 @@
   "employeeJob": {
     "department": "Technology",
     "designation": "Software Engineer",
-    "managerEmployeeNo": 1234
+    "managerEmployeeNo": 1000
   },
   "asset": {
     "assetId": "IN-PA-L076",
     "assetName": "lenovo",
     "assetModel": "system",
     "assetType": "windows"
-  }
+  },
+  "present": 1,
+  "role": "admin",
+  "employeeId": 1000
 }
-
-

@@ -2,22 +2,29 @@ const Employee = require("../models/employeeList.js");
 
 async function addEmployee(req, res) {
   try {
-    const { profile, personal, employeeJob, asset} = req.body;
+    const { profile, personal, employeeJob, asset, role } = req.body;
     const { department, designation, managerEmployeeNo } = employeeJob;
-    const { firstName, middleName, lastName, companyEmail, location, primaryContactNo } =
-      profile;
+    const {
+      firstName,
+      middleName,
+      lastName,
+      companyEmail,
+      location,
+      primaryContactNo,
+    } = profile;
     const { flat, area, landmark, pincode, city, state } = location;
     const { dob } = personal;
-    const { assetId, assetName, assetModel, assetType} = asset
+    const { assetId, assetName, assetModel, assetType } = asset;
+    let managerEmployeeNoId;
 
-    await Employee.find({ employeeId: managerEmployeeNo })
+    await Employee.findOne({ employeeId: managerEmployeeNo })
       .exec()
       .then((data) => {
         if (!data || data.length === 0) {
           res.status(404).json({ message: "Manager not found" });
           res.end();
         }
-        managerEmployeeNoId = data[0]._id;
+        managerEmployeeNoId = data._id;
       })
       .catch((err) => {
         console.error(err);
@@ -25,7 +32,7 @@ async function addEmployee(req, res) {
           .status(500)
           .json({ message: "An error occurred, manger not found" });
       });
-    
+
     const personalDetailsData = new Employee({
       profile: {
         firstName: firstName,
@@ -55,8 +62,9 @@ async function addEmployee(req, res) {
         assetId: assetId,
         assetName: assetName,
         assetModel: assetModel,
-        assetType: assetType        
-      }
+        assetType: assetType,
+      },
+      role: role,
     });
 
     const savedPersonalDetailsData = await personalDetailsData.save();
@@ -70,7 +78,7 @@ async function addEmployee(req, res) {
       res.status(400).send({ message: error.message });
     } else {
       console.error(error);
-      res.status(500).json({ message: "An error occurred" });
+      res.status(500).json({ message: "An error occurred in create." });
     }
   }
 }
