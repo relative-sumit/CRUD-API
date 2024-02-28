@@ -108,7 +108,6 @@ const employeeSchema = new mongoose.Schema({
     default: 0,
     enum: [0, 1],
   },
-});
 
 employeeSchema.pre("save", function (next) {
   Counter.findOneAndUpdate(
