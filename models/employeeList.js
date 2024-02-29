@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Counter = require("./counter.js");
 
 const locationSchema = new mongoose.Schema({
+  _id: false,
   flat: {
     type: String,
     required: true,
@@ -35,7 +36,63 @@ const locationSchema = new mongoose.Schema({
   },
 });
 
+const emailSchema = new mongoose.Schema({
+  _id: false,
+  companyMail: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        const validEmail = /^[a-zA-Z0-9._-]+@emp.in$/;
+        return validEmail.test(v);
+      },
+      message: (props) =>
+        `${props.value} is not in valid formate eg: example@emp.in`,
+    },
+  },
+  personalMail: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        const validEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return validEmail.test(v);
+      },
+      message: (props) =>
+        `${props.value} is not in valid formate eg: example@gmail.com`,
+    },
+  },
+});
+
+const phoneSchema = new mongoose.Schema({
+  _id: false,
+  countryCode: {
+    type: String,
+    required: true,
+  },
+  primary: {
+    type: String,
+    required: true,
+  },
+  backup: {
+    type: String,
+    required: true,
+  },
+  emergency: {
+    type: String,
+    required: true,
+  },
+});
+
+const contactSchema = new mongoose.Schema({
+  _id: false,
+  phone: phoneSchema,
+  email: emailSchema,
+  location: locationSchema,
+});
+
 const profileSchema = new mongoose.Schema({
+  _id: false,
   firstName: {
     type: String,
     required: true,
@@ -76,40 +133,27 @@ const profileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  companyEmail: {
-    type: String,
-    required: true,
-    validate: {
-      validator: function (v) {
-        const validEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return validEmail.test(v);
-      },
-      message: (props) =>
-        `${props.value} is not in valid formate eg: example@gmail.com`,
-    },
-  },
-  location: locationSchema,
-  primaryContactNo: {
-    type: String,
-    required: true,
-    validate: {
-      validator: function (v) {
-        const contactValid = /^(?:\+91\d{10}|\d{10})$/;
-        return contactValid.test(v);
-      },
-      message: (props) => `${props.value}:  is not a valid 10-digit number!`,
-    },
-  },
+  contact: contactSchema,
 });
 
 const personalSchema = new mongoose.Schema({
+  _id: false,
   dob: {
+    type: Date,
+    required: true,
+  },
+  doj: {
+    type: Date,
+    required: true,
+  },
+  doc: {
     type: Date,
     required: true,
   },
 });
 
-const empJobSchema = new mongoose.Schema({
+const employeeSchema = new mongoose.Schema({
+  _id: false,
   department: {
     type: String,
     required: true,
@@ -117,8 +161,9 @@ const empJobSchema = new mongoose.Schema({
   designation: {
     type: String,
     required: true,
+    enum: ["manager","team lead","senior software developer","software developer","hr","trainee",]
   },
-  managerEmployeeNo: {
+  managerDetails: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Employee",
   },
@@ -142,7 +187,7 @@ const assetSchema = new mongoose.Schema({
     required: true,
   },
 });
-const employeeSchema = new mongoose.Schema({
+const employeeDetailsSchema = new mongoose.Schema({
   employeeId: {
     type: Number,
     unique: true,
@@ -150,7 +195,7 @@ const employeeSchema = new mongoose.Schema({
   },
   profile: profileSchema,
   personal: personalSchema,
-  employeeJob: empJobSchema,
+  employee: employeeSchema,
   asset: assetSchema,
   present: {
     type: Number,
@@ -164,7 +209,7 @@ const employeeSchema = new mongoose.Schema({
   },
 });
 
-employeeSchema.pre("save", function (next) {
+employeeDetailsSchema.pre("save", function (next) {
   Counter.findOneAndUpdate(
     { _id: "IN1000" },
     { $inc: { employeeId: 1 } },
@@ -179,4 +224,4 @@ employeeSchema.pre("save", function (next) {
     });
 });
 
-module.exports = mongoose.model("Employee", employeeSchema);
+module.exports = mongoose.model("Employee", employeeDetailsSchema);

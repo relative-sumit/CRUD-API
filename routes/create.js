@@ -2,22 +2,18 @@ const Employee = require("../models/employeeList.js");
 
 async function addEmployee(req, res) {
   try {
-    const { profile, personal, employeeJob, asset, role } = req.body;
-    const { department, designation, managerEmployeeNo } = employeeJob;
-    const {
-      firstName,
-      middleName,
-      lastName,
-      companyEmail,
-      location,
-      primaryContactNo,
-    } = profile;
+    const { profile, personal, employee, asset, role } = req.body;
+    const { department, designation, managerDetails } = employee;
+    const { firstName, middleName, lastName, contact } = profile;
+    const { phone, email, location } = contact;
+    const { countryCode, primary, backup, emergency } = phone;
+    const { companyMail, personalMail } = email;
     const { flat, area, landmark, pincode, city, state } = location;
-    const { dob } = personal;
+    const { dob, doj, doc } = personal;
     const { assetId, assetName, assetModel, assetType } = asset;
     let managerEmployeeNoId;
 
-    await Employee.findOne({ employeeId: managerEmployeeNo })
+    await Employee.findOne({ employeeId: managerDetails })
       .exec()
       .then((data) => {
         if (!data || data.length === 0) {
@@ -39,24 +35,36 @@ async function addEmployee(req, res) {
         middleName: middleName,
         lastName: lastName,
         fullName: `${firstName} ${middleName} ${lastName}`,
-        companyEmail: companyEmail,
-        location: {
-          flat: flat,
-          area: area,
-          landmark: landmark,
-          pincode: pincode,
-          city: city,
-          state: state,
+        contact: {
+          phone: {
+            countryCode: countryCode,
+            primary: primary,
+            backup: backup,
+            emergency: emergency,
+          },
+          email: {
+            companyMail: companyMail,
+            personalMail: personalMail,
+          },
+          location: {
+            flat: flat,
+            area: area,
+            landmark: landmark,
+            pincode: pincode,
+            city: city,
+            state: state,
+          },
         },
-        primaryContactNo: primaryContactNo,
       },
       personal: {
         dob: dob,
+        doj: doj,
+        doc: doc,
       },
-      employeeJob: {
+      employee: {
         department: department,
         designation: designation,
-        managerEmployeeNo: managerEmployeeNoId,
+        managerDetails: managerEmployeeNoId,
       },
       asset: {
         assetId: assetId,
