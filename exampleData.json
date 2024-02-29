@@ -1,35 +1,45 @@
 {
   "profile": {
-    "firstName": "Mahindra",
-    "middleName": "singh",
-    "lastName": "Dhoni",
-    "fullName": "Mahindra singh Dhoni",
-    "companyEmail": "msd123@example.com",
-    "location": {
-      "flat": "301",
-      "area": "Gandhi colony",
-      "landmark": "Near SBI bank",
-      "pincode": 123456,
-      "city": "Nagpur",
-      "state": "Maharastra"
-    },
-    "primaryContactNo": "4545778383"
+    "firstName": "firstName",
+    "middleName": "middleName",
+    "lastName": "lastName",
+    "contact": {
+      "phone": {
+        "countryCode": "+91",
+        "primary": "8885554443",
+        "backup": "3434565621",
+        "emergency": "9087656543"
+      },
+      "email": {
+        "companyMail": "companyMail@emp.in",
+        "personalMail": "personalMail@gmail.com"
+      },
+      "location": {
+        "flat": "flat",
+        "area": "area",
+        "landmark": "landmark",
+        "pincode": "123456",
+        "city": "city",
+        "state": "state"
+      }
+    }
   },
   "personal": {
-    "dob": "1990-01-01"
+    "dob": "1990-01-01",
+    "doj": "2022-10-10",
+    "doc": "2022-06-06"
   },
-  "employeeJob": {
-    "department": "Technology",
-    "designation": "Software Engineer",
-    "managerEmployeeNo": 1000
+  "employee": {
+    "department": "department",
+    "designation": "hr",
+    "managerDetails": 1000
   },
   "asset": {
     "assetId": "IN-PA-L076",
     "assetName": "lenovo",
     "assetModel": "system",
-    "assetType": "windows"
-  },
-  "role": "admin",
-  "present": 1,
-  "employeeId": 1000
+    "assetType": "windows",
+    "_id": "65e00c016ab55549feec2937"
+},
+  "role": "admin"
 }

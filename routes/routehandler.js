@@ -6,7 +6,7 @@ const readOneEmployee = require("./readOne.js");
 const addEmployee = require("./create.js");
 const updateEmpjob = require("./update.js");
 const deleteEmployee = require("./delete.js");
-const cheskAuth = require("../middleware/checkAutherization.js");
+const checkAuth = require("../middleware/checkAutherization.js");
 
 router.get("", (req, res) => {
   res.send("This is router handler page.");
@@ -14,10 +14,10 @@ router.get("", (req, res) => {
 
 router.get("/login", login);
 
-router.get("/get", cheskAuth, readEmployee);
-router.get("/getOne", cheskAuth, readOneEmployee);
-router.post("/add", cheskAuth, addEmployee);
-router.put("/update", cheskAuth, updateEmpjob);
-router.delete("/delete", cheskAuth, deleteEmployee);
+router.get("/get", checkAuth, readEmployee);
+router.get("/getOne", checkAuth, readOneEmployee);
+router.post("/add", checkAuth, addEmployee);
+router.put("/update", checkAuth, updateEmpjob);
+router.delete("/delete", checkAuth, deleteEmployee);
 
 module.exports = router;
