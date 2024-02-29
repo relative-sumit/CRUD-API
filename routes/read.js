@@ -4,11 +4,11 @@ function readEmployee(req, res) {
   Employee.find({ present: 1 })
     .populate({
       path: "employeeJob.managerEmployeeNo",
-      select: "employeeId profile.name",
+      select: "employeeId profile.fullName",
     })
     .exec()
     .then((data) => {
-      res.status(200).json(data);
+      res.status(200).json({ Length: data.length, data: data });
     })
     .catch((err) => {
       console.error(err);

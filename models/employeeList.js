@@ -117,6 +117,7 @@ const empJobSchema = new mongoose.Schema({
   designation: {
     type: String,
     required: true,
+    enum: ["Manager", "HR", "Software Engineer", "Senior Software Engineer", "Trainee", "Technical Lead", "Tester"]
   },
   managerEmployeeNo: {
     type: mongoose.Schema.Types.ObjectId,
