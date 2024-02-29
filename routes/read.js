@@ -8,7 +8,7 @@ function readEmployee(req, res) {
     })
     .exec()
     .then((data) => {
-      res.status(200).json(data);
+      res.status(200).json({ Length: data.length, data: data });
     })
     .catch((err) => {
       console.error(err);
