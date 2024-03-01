@@ -7,7 +7,7 @@ const addEmployee = require("./create.js");
 const updateEmpjob = require("./update.js");
 const deleteEmployee = require("./delete.js");
 const checkAuth = require("../middleware/checkAutherization.js");
-const EmpManager = require('./manageEmployees.js');
+const showTeam = require('./showTeam.js');
 
 router.get("", (req, res) => {
   res.send("This is router handler page.");
@@ -20,6 +20,6 @@ router.get("/getOne", checkAuth, readOneEmployee);
 router.post("/add", checkAuth, addEmployee);
 router.put("/update", checkAuth, updateEmpjob);
 router.delete("/delete", checkAuth, deleteEmployee);
-router.get("/manage-emp", EmpManager);
+router.delete("/show-team", showTeam);
 
 module.exports = router;
