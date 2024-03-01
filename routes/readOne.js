@@ -4,7 +4,7 @@ function readOneEmployee(req, res) {
   const empId = req.headers.empid;
   Employee.find({ employeeId: empId, present: 1 })
     .populate({
-      path: "employeeJob.managerEmployeeNo",
+      path: "employee.managerDetails",
       select: "employeeId profile.fullName",
     })
     .exec()
