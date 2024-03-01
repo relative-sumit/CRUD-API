@@ -20,6 +20,6 @@ router.get("/getOne", checkAuth, readOneEmployee);
 router.post("/add", checkAuth, addEmployee);
 router.put("/update", checkAuth, updateEmpjob);
 router.delete("/delete", checkAuth, deleteEmployee);
-router.delete("/show-team", showTeam);
+router.get("/show-team", showTeam);
 
 module.exports = router;
