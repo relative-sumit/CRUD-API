@@ -69,18 +69,46 @@ const phoneSchema = new mongoose.Schema({
   countryCode: {
     type: String,
     required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^\+.{3,}$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} should start wit + sign`,
+    },
   },
   primary: {
     type: String,
     required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^\d{10}$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} should contains only 10 digits`,
+    },
   },
   backup: {
     type: String,
     required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^\d{10}$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} should contains only 10 digits`,
+    },
   },
   emergency: {
     type: String,
     required: true,
+    validate: {
+      validator: function (v) {
+        const contactValid = /^\d{10}$/;
+        return contactValid.test(v);
+      },
+      message: (props) => `${props.value} should contains only 10 digits`,
+    },
   },
 });
 
@@ -161,7 +189,14 @@ const employeeSchema = new mongoose.Schema({
   designation: {
     type: String,
     required: true,
-    enum: ["manager","team lead","senior software developer","software developer","hr","trainee",]
+    enum: [
+      "manager",
+      "team lead",
+      "senior software developer",
+      "software developer",
+      "hr",
+      "trainee",
+    ],
   },
   managerDetails: {
     type: mongoose.Schema.Types.ObjectId,
