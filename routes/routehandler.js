@@ -18,7 +18,7 @@ router.get("/login", login);
 
 router.get("/get", checkAuth, readEmployee);
 router.get("/getOne", checkAuth, readOneEmployee);
-router.post("/add", checkAuth, addEmployee);
+router.post("/add", addEmployee);
 router.put("/update", checkAuth, updateEmpjob);
 router.delete("/delete", checkAuth, deleteEmployee);
 router.get("/show-team", showTeam);

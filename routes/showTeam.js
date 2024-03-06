@@ -35,10 +35,7 @@ function showTeam(req, res) {
             } else if (data.employee.designation === "manager" && otherTeamManagerId) {
                 Employee.findOne({ employeeId: otherTeamManagerId, present: 1 })
                     .then(otherEmp => {
-                        if (otherEmp.employee.designation === "manager" && (!otherEmp || otherEmp === 0)) {
-                            res.status(404).json({ message: "There is no employees under this manager" });
-                        }
-                        else if (otherEmp.employee.designation === "manager" && JSON.stringify(otherEmp.employee.managerDetails) === JSON.stringify(data._id)) {
+                        if (otherEmp.employee.designation === "manager" && JSON.stringify(otherEmp.employee.managerDetails) === JSON.stringify(data._id)) {
                             showTeamToHigherManager(req, res, otherEmp);
                         }
                         else if (otherEmp.employee.designation === "manager" && JSON.stringify(otherEmp.employee.managerDetails) !== JSON.stringify(data._id)) {

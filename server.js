@@ -4,10 +4,12 @@ const express = require("express");
 const app = express();
 const mongoConnect = require("./db.js");
 const empCrud = require("./routes/routehandler.js");
+const cors = require('cors');
 
 const port = process.env.PORT;
 
 app.use(express.json());
+app.use(cors());
 
 // app.use(express.urlencoded({extended: false}));
 

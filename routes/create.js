@@ -1,4 +1,8 @@
 const Employee = require("../models/employeeList.js");
+const nodemailer = require('nodemailer');
+
+
+
 
 async function addEmployee(req, res) {
   try {
@@ -76,10 +80,13 @@ async function addEmployee(req, res) {
     });
 
     const savedPersonalDetailsData = await personalDetailsData.save();
-
+    const fn = savedPersonalDetailsData.profile.firstName;
+    const pemail = savedPersonalDetailsData.profile.contact.email.personalMail;
+    await sendMail(fn, pemail);
+  
     res.status(201).json({
       message: "Data created successfully",
-      Employee: savedPersonalDetailsData,
+      Employee: savedPersonalDetailsData,    
     });
   } catch (error) {
     if (error.name == "ValidationError") {
@@ -89,6 +96,31 @@ async function addEmployee(req, res) {
       res.status(500).json({ message: "An error occurred in create." });
     }
   }
+}
+
+//mail
+function sendMail(firstName, pemail) {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'youremai@gmail',
+      pass: 'password'
+    }
+  });
+
+  const mailOptions = {
+    from: 'youremai@gmail',
+    to: pemail,
+    subject: 'Congratulations 🎉🤝',
+    text: `Welcome ${firstName} to IN-Team` 
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 }
 
 module.exports = addEmployee;
