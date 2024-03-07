@@ -71,7 +71,7 @@ const phoneSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (v) {
-        const contactValid = /^\+.{3,}$/;
+        const contactValid = /^\+.{2,}$/;
         return contactValid.test(v);
       },
       message: (props) => `${props.value} should start wit + sign`,
