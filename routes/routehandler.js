@@ -8,6 +8,7 @@ const updateEmpjob = require("./update.js");
 const deleteEmployee = require("./delete.js");
 const checkAuth = require("../middleware/checkAutherization.js");
 const showTeam = require('./showTeam.js');
+const getHierarchy  = require('./higherManager.js');
 
 router.get("", (req, res) => {
   res.send("This is router handler page.");
@@ -21,5 +22,6 @@ router.post("/add", addEmployee);
 router.put("/update", checkAuth, updateEmpjob);
 router.delete("/delete", checkAuth, deleteEmployee);
 router.get("/show-team", showTeam);
+router.get("/gethier", getHierarchy);
 
 module.exports = router;

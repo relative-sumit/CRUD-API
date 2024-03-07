@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoConnect = require("./db.js");
 const empCrud = require("./routes/routehandler.js");
+const cors = require('cors');
 const initSocketIO = require("./middleware/socketIo.js");
 const app = express();
 const port = process.env.PORT;
